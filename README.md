@@ -1,1 +1,1 @@
-timur dyu
+Timur Dyu
