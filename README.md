@@ -1,2 +1,0 @@
-timur dyu
-arseniy tokarev
