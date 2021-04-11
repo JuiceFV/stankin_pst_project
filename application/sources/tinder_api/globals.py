@@ -1,3 +1,32 @@
+# Host of the tinder API
+HOST = 'https://api.gotinder.com'
+# Content's host of the tinder
+CONTENT_HOST = 'https://content.gotinder.com'
+
+# endpoints which are adds up to the base link ('https://content.gotinder.com'/'https://api.gotinder.com')
+KEY_ENDPOINTS = {
+    'fb_auth': {'method': 'POST', 'endpoint': '/v2/auth/login/facebook'},
+    'recs': {'method': 'POST', 'endpoint': '/user/recs'},
+    'profile': {'method': 'POST', 'endpoint': '/profile'},
+    'updates': {'method': 'POST', 'endpoint': '/updates'},
+    'meta': {'method': 'GET', 'endpoint': '/meta'}
+}
+
+# headers passes along with a request
+HEADERS = {
+    'host': 'api.gotinder.com',
+    'x-client-version': '47217',
+    'app-version': '467',
+    'Proxy-Connection': 'keep-alive',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'en-GB;q=1, fr-FR;q=0.9',
+    'platform': 'ios',
+    'Content-Type': 'application/json',
+    'User-Agent': 'Tinder/11.18.0 (iPhone; iOS 12.4.7; Scale/2.00)',
+    'Connection': 'keep-alive',
+    'os_version': '90000200001'
+}
+
 # https://en.wikipedia.org/wiki/User_agent
 USER_AGENT = 'Tinder/11.18.0 (iPhone; iOS 12.4.7; Scale/2.00)'
 
