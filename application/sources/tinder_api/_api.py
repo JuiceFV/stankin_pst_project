@@ -57,9 +57,10 @@ class TinderAPI:
             data=json.dumps({'token': fb_auth_token}),
             timeout=1,
         )
-        try:
+
+        if response.status_code == 200:
             return response.json()['data']['api_token']
-        except:
+        else:
             return None
 
     def auth(self, facebook_email, facebook_password):
@@ -76,7 +77,7 @@ class TinderAPI:
             self._session.headers.update({'Authorization': "Token token='#{'" + str(self._x_auth_token) + "'}'"})
             self._session.headers.update({'X-Auth-Token': str(self._x_auth_token)})
 
-    def _request(self, method, end_point, data={}):
+    def _request(self, method, end_point, data=None):
         """Basically this method is the wrapper for any request.
         :param method: the method of a request (GET, POST, DELETE, UPDATE)
         :param end_point: the endpoint all endpoints are presented here https://github.com/fbessez/Tinder
@@ -103,7 +104,7 @@ class TinderAPI:
         """
         return self._request("get", url)
 
-    def _post(self, url, data={}):
+    def _post(self, url, data=None):
         """Wrapper for post request
         :param url: a requested link
         :param data: possible request data. (dict() by default)
@@ -122,26 +123,27 @@ class TinderAPI:
         :param limit: limit for request
         :return: response
         """
-        return self._post(globals.KEY_ENDPOINTS['recs']['endpoint'], data={'limit': limit})
+        return self._post(constants.KEY_ENDPOINTS['recs']['endpoint'], data={'limit': limit})
 
     def profile(self):
         """Get my/your user's profile
         :return: response
         """
-        return self._get(globals.KEY_ENDPOINTS['profile']['endpoint'])
+        return self._get(constants.KEY_ENDPOINTS['profile']['endpoint'])
 
     def updates(self, since):
         """Last updates since <since>.
         :param since: date when to look for updates
         :return: response
         """
-        return self._post(globals.KEY_ENDPOINTS['updates']['endpoint'], {"last_activity_date": since} if since else {})
+        return self._post(constants.KEY_ENDPOINTS['updates']['endpoint'],
+                          {"last_activity_date": since} if since else {})
 
     def meta(self):
         """Retrieve my/your own metadata. (swipes left, people seen, etc..)
         :return: response
         """
-        return self._get(globals.KEY_ENDPOINTS['meta']['endpoint'])
+        return self._get(constants.KEY_ENDPOINTS['meta']['endpoint'])
 
     def add_profile_photo(self, facebook_id, x_dist, y_dist, x_offset, y_offset):
         """Adds a profile's photo to our Tinder profile.
@@ -164,7 +166,7 @@ class TinderAPI:
             ]
         }
 
-        return self._request("post", globals.CONTENT_HOST + globals.KEY_ENDPOINTS['meta']['endpoint'], data=data)
+        return self._request("post", constants.CONTENT_HOST + constants.KEY_ENDPOINTS['meta']['endpoint'], data=data)
 
     def delete_profile_photo(self, photo_id):
         """Delete profile photo from Tinder profile.
@@ -173,7 +175,7 @@ class TinderAPI:
         """
         data = {"assets": [photo_id]}
 
-        return self._request("delete", globals.CONTENT_HOST + globals.KEY_ENDPOINTS['meta']['endpoint'], data=data)
+        return self._request("delete", constants.CONTENT_HOST + constants.KEY_ENDPOINTS['meta']['endpoint'], data=data)
 
     def matches(self, since):
         """Check how many matches you have.
@@ -187,7 +189,7 @@ class TinderAPI:
         :param profile: updated profile
         :return: response
         """
-        return self._post(globals.KEY_ENDPOINTS['profile']['endpoint'], profile)
+        return self._post(constants.KEY_ENDPOINTS['profile']['endpoint'], profile)
 
     def like(self, user):
         """Like an user.
@@ -219,7 +221,7 @@ class TinderAPI:
         """
         return self._post(f"/user/matches/{user}", {"type": "gif", "gif_id": str(giphy_id)})
 
-    def report(self, user, cause=globals.ReportCause.Other, text=""):
+    def report(self, user, cause=constants.ReportCause.Other, text=""):
         """Report an user.
         :param user: an user to message to
         :param cause: the class of report's causes:
@@ -235,7 +237,7 @@ class TinderAPI:
 
         data = {"cause": cause}
 
-        if text and globals.ReportCause(cause) == globals.ReportCause.Other:
+        if text and constants.ReportCause(cause) == constants.ReportCause.Other:
             data["text"] = text
 
         return self._post("/report/" + user, data)
