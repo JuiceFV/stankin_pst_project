@@ -32,7 +32,7 @@ def _get_dir_list(names):
     # Number of lines
     num_lines = 2**n
     # fill the result with '\0'
-    dir_list = ['' for i in range(num_lines)]
+    dir_list = ['' for _ in range(num_lines)]
 
     # In our case a name represents a column.
     for name in names:
@@ -75,7 +75,8 @@ def classify_images_to_like_dislike(names):
         like_ratio = decision_list.count('yes') / len(decision_list)
         num_of_like_img = int(num_of_files * like_ratio)
         index = 0
-        print(f"Copies {num_of_like_img} files from {directory} to likes and {num_of_files - num_of_like_img} to dislikes")
+        print(f"Copies {num_of_like_img} files from {directory} to likes and "
+              f"{num_of_files - num_of_like_img} to dislikes")
         # Copy images to like folder
         while index < num_of_like_img:
             image = imread(base_path + directory + '/' + files[index])
