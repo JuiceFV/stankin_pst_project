@@ -7,6 +7,7 @@ import application.sources.validator.exception as errors
 from application.sources.validator.vote import Vote
 from application.sources.validator.io_helper import save_image
 
+
 class Canvas:
     """The class allows us to represent girl's photos and scroll among them.
     Also, it admits to vote for a girl.

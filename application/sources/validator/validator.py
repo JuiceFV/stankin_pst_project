@@ -1,6 +1,6 @@
 """The module contains the class responsible for image's validation.
 """
-from application.sources.pytinder import Session
+from application.sources.tinder_api import Session
 from application.sources.validator.represent import Canvas
 from path import Path
 

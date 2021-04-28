@@ -47,4 +47,3 @@ def save_image(image, image_name, decisions):
     print(filename)
     image.save(filename)
     return True
-

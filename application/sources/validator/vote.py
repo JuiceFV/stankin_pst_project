@@ -94,4 +94,3 @@ class Vote:
         :return: vote axes.
         """
         return getattr(self, 'ax_' + self._names[0])
-
