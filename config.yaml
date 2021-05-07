@@ -12,3 +12,7 @@ canvas:
     labels: ['Like', 'Dislike']
     names: ['milka']
     boxes_pos: {milka: [0.05, 0.4, 0.1, 0.15]}
+
+model:
+  path: 'model_256x256_2kimages.h5'
+  img_size: 256
